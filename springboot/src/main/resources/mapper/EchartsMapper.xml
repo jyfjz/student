@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.EchartsMapper">
+    <select id="selectCourse" resultType="com.example.entity.EchartsData">
+        select count(*) as number, course.name as courseName, course.id as courseId, course.teacher as teacher from course
+        left join grade
+        on grade.course_id = course.id
+        <where>
+<!--            <if test="studentName != null"> student.name like concat('%', #{studentName}, '%')</if>-->
+<!--            <if test="courseName != null"> and course.name like concat('%', #{courseName}, '%')</if>-->
+<!--            <if test="studentId != null"> and grade.student_id = #{studentId}</if>-->
+                <if test="id != null"> and course.id = #{id}</if>
+        </where>
+    </select>
+    <select id="selectAll" resultType="com.example.entity.EchartsData">
+        select course.name as courseName, course.id as courseId, count(*) as number from course
+        left join student_course
+        on course.id = student_course.course_id
+        group by course.id
+    </select>
+</mapper>

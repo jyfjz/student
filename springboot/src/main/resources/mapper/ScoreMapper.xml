@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ScoreMapper">
+    <select id="selectByCourseName" resultType="com.example.entity.Score">
+        SELECT course.id as courseId, student.id as studentId, student.`name` as studentName, course.`name` as courseName,
+               course.teacher as teacher, grade.score as score FROM `course`
+                                                                        left JOIN grade
+                                                                                  on course.id = grade.course_id
+                                                                        left JOIN student
+                                                                                  on grade.student_id = student.id
+        <where>
+            <if test="courseName!= null">and course.`name` = #{courseName}</if>
+            <if test="teacher!= ''">and course.teacher = #{teacher}</if>
+            and student.id is not NULL
+        </where>
+        ORDER BY score desc
+            limit 10
+    </select>
+</mapper>

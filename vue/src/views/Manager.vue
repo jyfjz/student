@@ -53,6 +53,10 @@
               <el-icon><UserFilled /></el-icon>
               <span>学生成绩</span>
             </el-menu-item>
+            <el-menu-item index="/echarts">
+              <el-icon><UserFilled /></el-icon>
+              <span>成绩展示</span>
+            </el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="4" v-if="user.role === 'ADMIN'">
@@ -84,8 +88,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 const $route = useRoute()
 const user = JSON.parse(localStorage.getItem('student-user') || '{}')
 
